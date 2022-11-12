@@ -1,5 +1,6 @@
 use clipboard_win::{Clipboard, formats, Setter};
 use std::ops::Add;
+use std::process;
 use winreg::RegKey;
 use winreg::enums::*;
 
@@ -20,6 +21,10 @@ impl Config {
             return Err("The number of parameters is incorrect.")
         }
         match &args[1] as &str {
+            "--help" => {
+                println!("arg \"build\" to register to the registry,\narg \"unbuild\" to unregister to the registry");
+                process::exit(0);
+            },
             "build" => Ok(Config {
                 app_mode: AppMode::AddRegistry,
                 message: if args.len() == 2 { String::from("get file name") } else { args[2].clone() }
